@@ -60,6 +60,8 @@ impl Universe {
         self.cells = next;
     }
     pub fn new() -> Universe {
+    utils::set_panic_hook(); // Call to set the panic hook
+        utils::set_panic_hook(); // Call to set the panic hook
         let width = 64;
         let height = 64;
         let cells = (0..height * width)
@@ -72,6 +74,7 @@ impl Universe {
             })
             .collect();
         Universe {
+        
             width,
             height,
             cells,
@@ -88,10 +91,10 @@ impl fmt::Display for Universe {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         for line in self.cells.as_slice().chunks(self.width as usize) {
             for &cell in line {
-                let symbol = if cell == Cell::Dead { "◩" } else { "◪" };
+                let symbol = if cell == Cell::Dead { "D" } else { "A" };
                 write!(f, "{}", symbol)?;
             }
-            write!(f, "\n");
+            write!(f, "\n")?;
         }
         Ok(())
     }
